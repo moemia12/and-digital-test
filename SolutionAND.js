@@ -12,7 +12,7 @@ The following function takes a string input and provides all possible combinatio
 
 */
 
-function solution(string) {
+function solution(originalString) {
 
   //Output initialised empty
   let output = []
@@ -25,8 +25,8 @@ function solution(string) {
 
 
   // 1. Filtering out numbers in initial string - If input string contains numbers then >>>
-  if (numberRegex.test(arr) === true) {
-    let split = arr.split('').filter((number) => !isNaN(number)).join('')
+  if (numberRegex.test(originalString) === true) {
+    let split = originalString.split('').filter((number) => !isNaN(number)).join('')
     let result = split.replace(/\s+/g, '')
 
     //input now ready to be turned in integers
