@@ -1,5 +1,15 @@
 /**
 * The following is the function where the solution shall be written
+
+The following function takes a string input and provides all possible combinations of permutations as an output and performs the following - It uses two internal functions to swap elements and generate permutations
+>> 1. Filters out numbers from the string input by removing all alphabetical, special characters and white spaces
+>> 2. If no numbers are present then displays an error message, prompting user to intput numbers
+>> 3. Turns the input string into an array of numbers - I felt using an array of numbers instead of a string allows more control over index manipulation
+>> 4. Swaps the indexes of the numbers to be used in a permutation generation function
+>> 5. Generates permutations for the given array of numbers
+>> 6. Sorts the order of the permutations in descending order
+>> 7. Maps out the final array of numbers back into a string for the output
+
 */
 
 function solution(string) {
@@ -14,7 +24,7 @@ function solution(string) {
   let numberRegex = /[0-9]/g
 
 
-  //Filtering out numbers in initial string - If input string contains numbers then >>>
+  // 1. Filtering out numbers in initial string - If input string contains numbers then >>>
   if (numberRegex.test(arr) === true) {
     let split = arr.split('').filter((number) => !isNaN(number)).join('')
     let result = split.replace(/\s+/g, '')
@@ -22,14 +32,14 @@ function solution(string) {
     //input now ready to be turned in integers
     string += result
 
-    //Iterating through input and pushing integers to arrayInput (This array will be used for permuation)  
+    // 3. Iterating through input and pushing integers to arrayInput (This array will be used for permuation)  
     for (let i = 0; i < string.length; i++) {
       let stringToInt = parseInt(string[i])
       arrayInput.push(stringToInt)
     }
 
 
-    //Function for initially swapping array elements
+    // 4. Function for initially swapping array elements
     //Will take the original array and swap them using the given indexes defined below
     //This function will be called recursively in the 'generate' function below
     const swapInPlace = (arrToSwap, indexA, indexB) => {
@@ -38,7 +48,7 @@ function solution(string) {
       arrToSwap[indexB] = temp
     }
 
-    //Recursive function to push array permutations to output
+    // 5. Recursive function to push array permutations to output
     //For every push, the function will subtract n moving on to the next element in the array
     const generate = (n, inputArr) => {
       if (n === 1) {
@@ -62,7 +72,7 @@ function solution(string) {
     //using slice to ensure purity of the function and not modifying the original array
     generate(arrayInput.length, arrayInput.slice())
 
-    //Sorting elements in descending order
+    // 6. Sorting elements in descending order
     output.sort((a, b) => {
       // Find the first index that's different between the two subarrays being compared
       const diffIndex = a.findIndex((itemA, i) => b[i] !== itemA);
@@ -73,11 +83,11 @@ function solution(string) {
       return diffIndex === -1 ? 0 : b[diffIndex] - a[diffIndex];
     });
 
-    //Returning final output as a string
+    // 7. Returning final output as a string
     return output.map(number => number.join('')).join()
 
   } else {
-    //Return message if the input string contains no numbers
+    // 2. Return message if the input string contains no numbers
     return 'The input must contain numbers!'
   }
 }
